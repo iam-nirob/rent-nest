@@ -1,0 +1,17 @@
+model Payment {
+  id            String        @id @default(uuid())
+  transactionId String        @unique
+  amount        Decimal       @db.Decimal(10, 2)
+  status        PaymentStatus @default(PENDING)
+
+  rentalRequestId String        @unique
+  rentalRequest   RentalRequest @relation(fields: [rentalRequestId], references: [id], onDelete: Cascade)
+  tenantId        String
+  tenant          Users         @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@index(tenantId)
+  @@index([status])
+  @@map("payments")
+}

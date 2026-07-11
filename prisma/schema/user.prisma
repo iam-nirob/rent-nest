@@ -1,10 +1,19 @@
 model Users {
-  id        String     @id @default(uuid())
-  name      String
-  email     String     @unique
-  password  String
-  phone     String?
-  avatarUrl String?
-  role      Role       @default(TENANT)
-  status    UserStatus @default(ACTIVE)
+  id             String          @id @default(uuid())
+  name           String
+  email          String          @unique
+  password       String
+  phone          String?
+  avatarUrl      String?
+  role           Role            @default(TENANT)
+  status         UserStatus      @default(ACTIVE)
+  properties     Property[]
+  rentalRequests RentalRequest[]
+  reviews        Reviews[]
+  payments       Payment[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@index([role])
+  @@map("users")
 }

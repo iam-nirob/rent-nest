@@ -8,3 +8,29 @@ enum UserStatus {
   ACTIVE
   BANNED
 }
+
+enum PropertyStatus {
+  AVAILABLE
+  UNAVAILABLE
+  RENTED
+}
+
+enum RentalStatus {
+  PENDING
+  APPROVED
+  ACTIVE
+  COMPLETED
+  CANCELED
+}
+
+enum PaymentProvider {
+  STRIPE
+  SSLCOM
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
