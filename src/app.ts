@@ -2,6 +2,7 @@ import express, { Application, Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import config from "./config";
+import { notFound } from "./middleware/notFound";
 const app: Application = express();
 
 app.use(
@@ -20,5 +21,7 @@ app.use(cookieParser());
 app.get("/", async (req: Request, res: Response) => {
   res.send("Rent Nest Server");
 });
+
+app.use(notFound);
 
 export default app;
