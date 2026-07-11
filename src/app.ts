@@ -4,6 +4,7 @@ import cors from "cors";
 import config from "./config";
 import { notFound } from "./middleware/notFound";
 import { globalErrorHandler } from "./middleware/globalErrorHandler";
+import { usersRouter } from "./module/users/users.route";
 const app: Application = express();
 
 app.use(
@@ -22,6 +23,8 @@ app.use(cookieParser());
 app.get("/", async (req: Request, res: Response) => {
   res.send("Rent Nest Server");
 });
+
+app.use("/api/auth", usersRouter);
 
 app.use(notFound);
 app.use(globalErrorHandler);
