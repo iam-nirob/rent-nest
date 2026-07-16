@@ -5,6 +5,7 @@ import config from "./config";
 import { notFound } from "./middleware/notFound";
 import { globalErrorHandler } from "./middleware/globalErrorHandler";
 import { usersRouter } from "./module/users/users.route";
+import { authRouter } from "./module/auth/auth.route";
 const app: Application = express();
 
 app.use(
@@ -25,6 +26,7 @@ app.get("/", async (req: Request, res: Response) => {
 });
 
 app.use("/api/auth", usersRouter);
+app.use("/api/auth", authRouter);
 
 app.use(notFound);
 app.use(globalErrorHandler);
