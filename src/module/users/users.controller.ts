@@ -29,7 +29,19 @@ const getUser = catchAsync(
     next();
   },
 );
-const getUsersId = async () => {};
+const getUsersId = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+    const user = await usersService.getUsersIdDB(id as string);
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "User fetched successfully",
+      data: user,
+    });
+    next();
+  },
+);
 const updateUser = async (userId: string, userData: any) => {};
 const deleteUser = async (userId: string) => {};
 export const usersController = {

@@ -52,7 +52,17 @@ const getUserDB = async () => {
   });
   return users;
 };
-const getUsersIdDB = async () => {};
+const getUsersIdDB = async (userId: string) => {
+  const user = await prisma.users.findUniqueOrThrow({
+    where: {
+      id: userId,
+    },
+    omit: {
+      password: true,
+    },
+  });
+  return user;
+};
 const updateUserDB = async () => {};
 const deleteUserDB = async () => {};
 
