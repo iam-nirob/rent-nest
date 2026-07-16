@@ -7,12 +7,19 @@ import { sendResponse } from "../../utils/sendResponse";
 const loginUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const payload = req.body;
-    const { accessToken } = await authService.loginUserDB(payload);
+    const { accessToken, refreshToken } =
+      await authService.loginUserDB(payload);
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
       secure: false,
       sameSite: "none",
       maxAge: 1000 * 60 * 60 * 24,
+    });
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "none",
+      maxAge: 1000 * 60 * 60 * 24 * 7,
     });
 
     sendResponse(res, {
@@ -21,6 +28,7 @@ const loginUser = catchAsync(
       message: "User logged in successfully",
       data: {
         accessToken,
+        refreshToken,
         payload: {
           email: payload.email,
         },
@@ -29,6 +37,31 @@ const loginUser = catchAsync(
     next();
   },
 );
+
+const refreshToken = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { refreshToken } = req.cookies;
+    const { accessToken } = await authService.refreshTokenDB(refreshToken);
+    res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "none",
+      maxAge: 1000 * 60 * 60 * 24,
+    });
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Access token refreshed successfully",
+      data: {
+        accessToken,
+        refreshToken,
+      },
+    });
+    next();
+  },
+);
+
 export const authController = {
   loginUser,
+  refreshToken,
 };
