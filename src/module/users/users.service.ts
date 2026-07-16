@@ -40,7 +40,18 @@ const createUserDB = async (payload: CreateUserPayload) => {
   });
   return user;
 };
-const getUserDB = async () => {};
+const getUserDB = async () => {
+  const users = await prisma.users.findMany({
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      phone: true,
+      avatarUrl: true,
+    },
+  });
+  return users;
+};
 const getUsersIdDB = async () => {};
 const updateUserDB = async () => {};
 const deleteUserDB = async () => {};

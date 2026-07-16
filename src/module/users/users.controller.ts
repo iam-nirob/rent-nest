@@ -17,7 +17,18 @@ const createUser = catchAsync(
     next();
   },
 );
-const getUser = async (userId: string) => {};
+const getUser = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const users = await usersService.getUserDB();
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Users fetched successfully",
+      data: users,
+    });
+    next();
+  },
+);
 const getUsersId = async () => {};
 const updateUser = async (userId: string, userData: any) => {};
 const deleteUser = async (userId: string) => {};
