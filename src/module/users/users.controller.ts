@@ -42,8 +42,33 @@ const getUsersId = catchAsync(
     next();
   },
 );
-const updateUser = async (userId: string, userData: any) => {};
-const deleteUser = async (userId: string) => {};
+const updateUser = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+    const userData = req.body;
+    const user = await usersService.updateUserDB(id as string, userData);
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "User updated successfully",
+      data: user,
+    });
+    next();
+  },
+);
+const deleteUser = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+    const user = await usersService.deleteUserDB(id as string);
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "User deleted successfully",
+      data: user,
+    });
+    next();
+  },
+);
 export const usersController = {
   createUser,
   getUser,

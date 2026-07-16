@@ -5,3 +5,11 @@ export interface CreateUserPayload {
   phone?: string;
   avatarUrl?: string;
 }
+
+export interface UpdateUserPayload {
+  name?: string;
+  email?: string;
+  password?: string;
+  phone?: string;
+  avatarUrl?: string;
+}
