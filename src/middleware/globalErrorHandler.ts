@@ -7,11 +7,18 @@ export const globalErrorHandler = (
   res: Response,
   next: NextFunction,
 ) => {
-  let statusCode;
+  let statusCode =
+    err?.statusCode || err?.status || httpStatus.INTERNAL_SERVER_ERROR;
   let errorMessage;
   if (err instanceof Prisma.PrismaClientValidationError) {
     statusCode = httpStatus.BAD_REQUEST;
     errorMessage = "Validation error: " + err.message;
+  } else if (
+    err instanceof Prisma.PrismaClientKnownRequestError &&
+    err.code === "P2002"
+  ) {
+    statusCode = httpStatus.CONFLICT;
+    errorMessage = "Duplicate record: " + err.message;
   } else if (err instanceof Prisma.PrismaClientKnownRequestError) {
     statusCode = httpStatus.BAD_REQUEST;
     errorMessage = "Known request error: " + err.message;
@@ -25,7 +32,6 @@ export const globalErrorHandler = (
     statusCode = httpStatus.INTERNAL_SERVER_ERROR;
     errorMessage = "Initialization error: " + err.message;
   } else {
-    statusCode = httpStatus.INTERNAL_SERVER_ERROR;
     errorMessage = "Internal server error: " + err.message;
   }
   res.status(statusCode).json({
