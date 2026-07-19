@@ -32,7 +32,10 @@ export const globalErrorHandler = (
     statusCode = httpStatus.INTERNAL_SERVER_ERROR;
     errorMessage = "Initialization error: " + err.message;
   } else {
-    errorMessage = "Internal server error: " + err.message;
+    errorMessage =
+      err?.statusCode || err?.status
+        ? err.message
+        : "Internal server error: " + err.message;
   }
   res.status(statusCode).json({
     success: false,
