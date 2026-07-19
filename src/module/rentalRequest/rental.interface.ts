@@ -4,3 +4,13 @@ export interface RentalRequest {
   moveOutDate?: string | Date;
   message?: string;
 }
+
+export interface IUpdateRentalRequestStatus {
+  status: "APPROVED" | "CANCELED" | "ACTIVE" | "COMPLETED";
+}
+
+export interface IRentalQuery {
+  status?: string;
+  page?: string;
+  limit?: string;
+}

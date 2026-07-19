@@ -6,7 +6,6 @@
   "scripts": {
     "start": "node dist/server.js",
     "dev": "nodemon --exec tsx src/server.ts",
-    "stripe:webhook": "stripe listen --forward-to localhost:5600/api/subscription/webhook",
     "build": "tsup"
   },
   "keywords": [],
@@ -29,6 +28,7 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^26.1.1",
     "@types/pg": "^8.20.0",
+    "axios": "^1.7.9",
     "bcryptjs": "^3.0.3",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",

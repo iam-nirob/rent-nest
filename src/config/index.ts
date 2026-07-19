@@ -11,4 +11,13 @@ export default {
   jwt_access_expire_in: process.env.JWT_ACCESS_EXPIRE_IN!,
   jwt_refresh_secret: process.env.JWT_REFRESH_SECRET!,
   jwt_refresh_expire_in: process.env.JWT_REFRESH_EXPIRE_IN!,
+  // Backend's own base url, used to build payment success/fail/cancel/ipn callback urls
+  base_url: process.env.BASE_URL || "http://localhost:5700",
+  // Stripe
+  stripe_secret_key: process.env.STRIPE_SECRET_KEY!,
+  stripe_webhook_secret: process.env.STRIPE_WEBHOOK_SECRET!,
+  // SSLCommerz
+  sslcommerz_store_id: process.env.SSLCOMMERZ_STORE_ID!,
+  sslcommerz_store_password: process.env.SSLCOMMERZ_STORE_PASSWORD!,
+  sslcommerz_is_live: process.env.SSLCOMMERZ_IS_LIVE === "true",
 };

@@ -4,6 +4,7 @@ import { usersService } from "./users.service";
 import { sendResponse } from "../../utils/sendResponse";
 import httpStatus from "http-status";
 
+// POST /api/auth/register
 const createUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const payload = req.body;
@@ -11,12 +12,14 @@ const createUser = catchAsync(
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.CREATED,
-      message: "User created successfully",
+      message: "User registered successfully",
       data: user,
     });
     next();
   },
 );
+
+// Kept for reuse by the admin module
 const getUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const users = await usersService.getUserDB();
@@ -29,6 +32,7 @@ const getUser = catchAsync(
     next();
   },
 );
+
 const getUsersId = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
@@ -42,6 +46,7 @@ const getUsersId = catchAsync(
     next();
   },
 );
+
 const updateUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
@@ -56,6 +61,7 @@ const updateUser = catchAsync(
     next();
   },
 );
+
 const deleteUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
@@ -69,10 +75,44 @@ const deleteUser = catchAsync(
     next();
   },
 );
+
+// GET /api/auth/me
+const getMyProfile = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const userId = req.user?.id as string;
+    const user = await usersService.getMyProfileDB(userId);
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Profile fetched successfully",
+      data: user,
+    });
+    next();
+  },
+);
+
+// PATCH /api/auth/me
+const updateMyProfile = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const userId = req.user?.id as string;
+    const payload = req.body;
+    const user = await usersService.updateMyProfileDB(userId, payload);
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Profile updated successfully",
+      data: user,
+    });
+    next();
+  },
+);
+
 export const usersController = {
   createUser,
   getUser,
   getUsersId,
   updateUser,
   deleteUser,
+  getMyProfile,
+  updateMyProfile,
 };

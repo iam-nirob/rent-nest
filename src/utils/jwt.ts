@@ -19,7 +19,10 @@ const verifyToken = (token: string, secret: string) => {
       data: decoded,
     };
   } catch (error: any) {
-    throw new Error("Invalid token");
+    return {
+      success: false,
+      error: error.message,
+    };
   }
 };
 
