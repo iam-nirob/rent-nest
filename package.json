@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.ts",
+  "packageManager": "pnpm@11.9.0",
   "scripts": {
     "start": "node dist/server.js",
     "dev": "nodemon --exec tsx src/server.ts",
@@ -11,13 +12,6 @@
   "keywords": [],
   "author": "nirob-sarker",
   "license": "ISC",
-  "devEngines": {
-    "packageManager": {
-      "name": "pnpm",
-      "version": "^11.9.0",
-      "onFail": "download"
-    }
-  },
   "type": "module",
   "dependencies": {
     "@prisma/adapter-pg": "^7.8.0",
