@@ -56,7 +56,6 @@ const submitRentalRequestDB = async (
   return newRentalRequest;
 };
 
-// Tenant: view own rental request history (pending/approved/rejected/etc)
 const getMyRentalRequestsDB = async (tenantId: string, query: IRentalQuery) => {
   const limit = query.limit ? Number(query.limit) : 10;
   const page = query.page ? Number(query.page) : 1;
@@ -89,7 +88,6 @@ const getMyRentalRequestsDB = async (tenantId: string, query: IRentalQuery) => {
   };
 };
 
-// Tenant/Landlord/Admin: view a single rental request they're party to
 const getRentalRequestByIdDB = async (
   id: string,
   userId: string,
@@ -122,7 +120,6 @@ const getRentalRequestByIdDB = async (
   return rentalRequest;
 };
 
-// Landlord: view all rental requests submitted for their properties
 const getLandlordRentalRequestsDB = async (
   landlordId: string,
   query: IRentalQuery,
@@ -155,7 +152,6 @@ const getLandlordRentalRequestsDB = async (
   };
 };
 
-// Landlord: approve or reject(cancel) a rental request for their own property
 const updateRentalRequestStatusDB = async (
   id: string,
   landlordId: string,
@@ -185,10 +181,7 @@ const updateRentalRequestStatusDB = async (
   }
 
   if (!["APPROVED", "CANCELED"].includes(payload.status)) {
-    throw createHttpError(
-      "status must be either APPROVED or CANCELED",
-      400,
-    );
+    throw createHttpError("status must be either APPROVED or CANCELED", 400);
   }
 
   const updated = await prisma.rentalRequest.update({

@@ -19,7 +19,6 @@ const submitRentalRequest = catchAsync(
   },
 );
 
-// GET /api/rentals  (tenant's own rental request history)
 const getRentalRequest = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const tenantId = req.user?.id as string;
@@ -38,7 +37,6 @@ const getRentalRequest = catchAsync(
   },
 );
 
-// GET /api/rentals/:id
 const getRentalRequestById = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
@@ -59,7 +57,6 @@ const getRentalRequestById = catchAsync(
   },
 );
 
-// GET /api/landlord/requests  (landlord's incoming requests)
 const getAllRentalRequests = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const landlordId = req.user?.id as string;
@@ -78,7 +75,6 @@ const getAllRentalRequests = catchAsync(
   },
 );
 
-// PATCH /api/landlord/requests/:id  (approve / reject)
 const updateRentalRequest = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;

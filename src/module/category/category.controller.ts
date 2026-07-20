@@ -4,7 +4,6 @@ import { catchAsync } from "../../utils/cathcAsync";
 import { categoryService } from "./category.service";
 import { sendResponse } from "../../utils/sendResponse";
 
-// GET /api/categories
 const getCategories = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const result = await categoryService.getCategoriesDB();
@@ -18,7 +17,6 @@ const getCategories = catchAsync(
   },
 );
 
-// POST /api/admin/categories
 const createCategory = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const result = await categoryService.createCategoryDB(req.body);
@@ -32,7 +30,6 @@ const createCategory = catchAsync(
   },
 );
 
-// PATCH /api/admin/categories/:id
 const updateCategory = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
@@ -50,7 +47,6 @@ const updateCategory = catchAsync(
   },
 );
 
-// DELETE /api/admin/categories/:id
 const deleteCategory = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;

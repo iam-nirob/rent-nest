@@ -163,9 +163,7 @@ const confirmPaymentDB = async (payload: IConfirmPaymentPayload) => {
         400,
       );
     }
-    const session = await stripe.checkout.sessions.retrieve(
-      payload.sessionId,
-    );
+    const session = await stripe.checkout.sessions.retrieve(payload.sessionId);
 
     if (session.payment_status !== "paid") {
       throw createHttpError("Payment has not been completed yet", 400);
@@ -191,7 +189,10 @@ const confirmPaymentDB = async (payload: IConfirmPaymentPayload) => {
     throw createHttpError("SSLCommerz payment validation failed", 400);
   }
 
-  return markPaymentCompleted(payment.id, validation.card_type || "mobile_banking");
+  return markPaymentCompleted(
+    payment.id,
+    validation.card_type || "mobile_banking",
+  );
 };
 
 // Tenant: view own payment history

@@ -32,7 +32,6 @@ app.use(
   }),
 );
 
-// Common Middleware
 app.use(express.json());
 app.use(express.text());
 app.use(express.urlencoded({ extended: true }));
@@ -42,29 +41,22 @@ app.get("/", async (req: Request, res: Response) => {
   res.send("Rent Nest Server");
 });
 
-// Authentication - register, login, refresh-token, me
 app.use("/api/auth", usersRouter);
 app.use("/api/auth", authRouter);
 
-// Properties - public browsing
 app.use("/api/properties", propertyRoutes);
-// Categories - public listing
+
 app.use("/api/categories", categoryRoutes);
 
-// Landlord - manage own listings & incoming rental requests
 app.use("/api/landlord/properties", landlordPropertyRoutes);
 app.use("/api/landlord/requests", landlordRentalRoute);
 
-// Rental requests - tenant self-service
 app.use("/api/rentals", rentalRoute);
 
-// Payments - Stripe / SSLCommerz
 app.use("/api/payments", paymentRoutes);
 
-// Reviews
 app.use("/api/reviews", reviewRoutes);
 
-// Admin
 app.use("/api/admin", adminRoutes);
 app.use("/api/admin/categories", adminCategoryRoutes);
 

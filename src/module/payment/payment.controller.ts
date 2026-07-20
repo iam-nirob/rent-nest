@@ -4,7 +4,6 @@ import { catchAsync } from "../../utils/cathcAsync";
 import { paymentService } from "./payment.service";
 import { sendResponse } from "../../utils/sendResponse";
 
-// POST /api/payments/create
 const createPayment = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const tenantId = req.user?.id as string;
@@ -19,7 +18,6 @@ const createPayment = catchAsync(
   },
 );
 
-// POST /api/payments/confirm
 const confirmPayment = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const result = await paymentService.confirmPaymentDB(req.body);
@@ -33,7 +31,6 @@ const confirmPayment = catchAsync(
   },
 );
 
-// POST /api/payments/ipn/sslcommerz - server-to-server IPN listener
 const sslcommerzIpn = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const { tran_id, val_id } = req.body;
@@ -47,7 +44,6 @@ const sslcommerzIpn = catchAsync(
   },
 );
 
-// GET /api/payments
 const getMyPayments = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const tenantId = req.user?.id as string;
@@ -63,7 +59,6 @@ const getMyPayments = catchAsync(
   },
 );
 
-// GET /api/payments/:id
 const getPaymentById = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;

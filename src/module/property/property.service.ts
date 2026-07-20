@@ -6,7 +6,6 @@ import {
   IUpdatePropertyPayload,
 } from "./property.interface";
 
-// Public: browse all AVAILABLE properties with filters + pagination
 const getPropertiesDB = async (query: IPropertyQuery) => {
   const limit = query.limit ? Number(query.limit) : 10;
   const page = query.page ? Number(query.page) : 1;
@@ -25,7 +24,10 @@ const getPropertiesDB = async (query: IPropertyQuery) => {
         ? {
             OR: [
               {
-                title: { contains: query.searchTerms, mode: "insensitive" as const },
+                title: {
+                  contains: query.searchTerms,
+                  mode: "insensitive" as const,
+                },
               },
               {
                 description: {
@@ -37,7 +39,12 @@ const getPropertiesDB = async (query: IPropertyQuery) => {
           }
         : {},
       query.location
-        ? { location: { contains: query.location, mode: "insensitive" as const } }
+        ? {
+            location: {
+              contains: query.location,
+              mode: "insensitive" as const,
+            },
+          }
         : {},
       query.categoryId ? { categoryId: query.categoryId } : {},
       query.bedrooms ? { bedrooms: Number(query.bedrooms) } : {},

@@ -4,7 +4,6 @@ import { catchAsync } from "../../utils/cathcAsync";
 import { propertyService } from "./property.service";
 import { sendResponse } from "../../utils/sendResponse";
 
-// GET /api/properties
 const getProperties = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const result = await propertyService.getPropertiesDB(req.query);
@@ -19,7 +18,6 @@ const getProperties = catchAsync(
   },
 );
 
-// GET /api/properties/:id
 const getPropertyById = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
@@ -34,7 +32,6 @@ const getPropertyById = catchAsync(
   },
 );
 
-// GET /api/landlord/properties
 const getMyProperties = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const landLordId = req.user?.id as string;
@@ -53,15 +50,11 @@ const getMyProperties = catchAsync(
   },
 );
 
-// POST /api/landlord/properties
 const createProperty = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const landLordId = req.user?.id as string;
     const payload = req.body;
-    const result = await propertyService.createPropertyDB(
-      payload,
-      landLordId,
-    );
+    const result = await propertyService.createPropertyDB(payload, landLordId);
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.CREATED,
@@ -72,7 +65,6 @@ const createProperty = catchAsync(
   },
 );
 
-// PUT /api/landlord/properties/:id
 const updateProperty = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
@@ -95,17 +87,12 @@ const updateProperty = catchAsync(
   },
 );
 
-// DELETE /api/landlord/properties/:id
 const deleteProperty = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
     const landLordId = req.user?.id as string;
     const isAdmin = req.user?.role === "ADMIN";
-    await propertyService.deletePropertyDB(
-      id as string,
-      landLordId,
-      isAdmin,
-    );
+    await propertyService.deletePropertyDB(id as string, landLordId, isAdmin);
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.OK,
