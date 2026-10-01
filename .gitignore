@@ -1,6 +1,8 @@
 node_modules
 .env
 /generated/prisma
+ppm-lock.yaml
+pnpm-workspace.yaml
 
 
 .vercel
